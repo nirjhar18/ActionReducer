@@ -41,7 +41,10 @@ export class RequestComponent implements OnInit {
     // Load All requests is an action that takes the payload of allRequests as a type of Request Array.
     this.store.dispatch(LoadAllRequests({allRequests: this.requestList}));
     // Subscribe the observable to get records from the store and assign to gloabl object.
+    // select function is used to get data from the store. First parameter is the name of the store
+    // second parameter is part of the store
     this.processedRequests$ = this.store.pipe(select('crudRequests', 'requestCollection'));
+    // Once you get results from store, you need to subscribe it to show it.
     this.processedRequests$.subscribe(req => {
       this.rt = req;
       console.log(this.rt);
@@ -49,6 +52,13 @@ export class RequestComponent implements OnInit {
     .unsubscribe();
   }
 
+  // This is just a function that dispatches an action. This will go in request.actions and find that action and dispatch it.
+  // There are effects that are listening to the actions, if there is an effect with same action name then effect will start its work
+  // Reducers are also with same name and will behave depending upon the results from actions/effects.
+  // In this example, LoadStaticRequestsFromEffects action is dispatched which has an effect listening for this action
+  // which calls a service to get results from service and then call another action "ShowAllRequestsFromEffects" and passes the results
+  // from service as payload. This payload is used by the reducer to update the store.
+  // Once the store is updated, processedRequest$ variable is updated by selecting requestCollection from crudRequests Store
   LoadRequestsFromEffects() {
     this.store.dispatch(LoadStaticRequestsFromEffects());
     this.processedRequests$ = this.store.pipe(select('crudRequests', 'requestCollection'));

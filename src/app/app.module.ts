@@ -18,6 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
   ],
   imports: [
     StoreModule.forRoot({
+      // This will be the name of the store
       crudRequests : requestReducer
     }),
     EffectsModule.forRoot([

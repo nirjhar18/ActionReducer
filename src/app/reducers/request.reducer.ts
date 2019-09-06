@@ -10,7 +10,7 @@ import {createReducer, on} from '@ngrx/store';
 
 
 // Reducers are used to create/initialize and update store.
-// New Interface for Request State. This is your store name
+// New Interface for Request State.
 export interface RequestState {
     requestCollection: Request[];
     request: Request;
@@ -25,6 +25,7 @@ export const requestInitialState: RequestState = {
 };
 
 // Create a reducer function with createReducer function and use "on" method for each action in action.ts
+// requestReducer will be used in app.module.ts to add it to pipeline. Name of the store will be in app.module.ts
 export const requestReducer = createReducer(
   requestInitialState,
   on(UpdateRequest, state => ({
@@ -43,6 +44,7 @@ export const requestReducer = createReducer(
   on(LoadStaticRequestsFromEffects, state => ({
     ...state
   })),
+  // requestsFromEffects is the payload that is coming from effect results which is used to update the requestion collection in the store.
   on(ShowAllRequestsFromEffects, (state , { requestsfromEffects }) => ({
     ...state,
     requestCollection : requestsfromEffects,
