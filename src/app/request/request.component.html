@@ -1,0 +1,14 @@
+<button (click)="LoadRequests()">Load All Requests</button>
+<br /><hr>
+<button (click)="GetRequest()">Get 1st Request</button>
+<br /><hr>
+<button (click)="LoadRequestsFromEffects()">Load Requests from Effects</button>
+<hr>
+
+<ul>
+<li *ngFor="let req of rt">{{req.Name}}</li>
+</ul>
+<div *ngIf="firstRequest!= null">
+  {{firstRequest.Name}}
+</div>
+
